@@ -5,7 +5,9 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
 # 🔹 Path to your local repo
-repo_path = "C:\Automate-Github"
+repo_path = r"C:\Automate-Github"
+GIT_PATH = r"C:\Program Files\Git\bin\git.exe"
+
 
 class GitAutoPushHandler(FileSystemEventHandler):
     def on_modified(self, event):
@@ -13,10 +15,10 @@ class GitAutoPushHandler(FileSystemEventHandler):
             print(f"Detected change in: {event.src_path}")
             commit_message = f"Auto update: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
             commands = [
-                "git add .",
-                f'git commit -m "{commit_message}"',
-                "git push origin main"
-            ]
+                    f'"{GIT_PATH}" add .',
+                    f'"{GIT_PATH}" commit -m "{commit_message}"',
+                    f'"{GIT_PATH}" push origin main'
+                    ]
             for cmd in commands:
                 subprocess.run(cmd, shell=True, cwd=repo_path)
 
